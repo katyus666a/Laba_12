@@ -37,6 +37,7 @@ private val defaultCommunities = listOf("raywenderlich", "androiddev", "puppies"
 
 @Composable
 fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
+    //TODO Add your code here
     val scope = rememberCoroutineScope()
     val communities: List<String> by viewModel.subreddits.observeAsState(emptyList())
     var searchedText by remember { mutableStateOf("") }
@@ -81,28 +82,24 @@ fun ChooseCommunityScreen(viewModel: MainViewModel, modifier: Modifier = Modifie
 }
 
 @Composable
-    fun SearchedCommunities(
-        communities: List<String>,
-        viewModel: MainViewModel?,
-        modifier: Modifier = Modifier
-    ) {
-    communities.forEach {
-        Community(
-            text = it,
-            modifier = modifier,
-            onCommunityClicked = {
-                viewModel?.selectedCommunity?.postValue(it)
-                RedditRouter.goBack()
-            }
-        )
+fun SearchedCommunities(
+    communities: List<String>,
+    viewModel: MainViewModel?,
+    modifier: Modifier = Modifier
+) {
+    communities.forEach { Community(
+        text = it,
+        modifier = modifier,
+        onCommunityClicked = {
+            viewModel?.selectedCommunity?.postValue(it)
+            RedditRouter.goBack()
+        }
+    )
     }
 }
-
 @Composable
 fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
-
     val colors = MaterialTheme.colors
-
     TopAppBar(
         title = {
             Text(
@@ -128,4 +125,15 @@ fun ChooseCommunityTopBar(modifier: Modifier = Modifier) {
             .height(48.dp)
             .background(Color.Blue)
     )
+}
+@Preview
+@Composable
+fun SearchedCommunitiesPreview() {
+    Column {
+        SearchedCommunities(
+            defaultCommunities,
+            null,
+            Modifier
+        )
+    }
 }
